@@ -16,14 +16,15 @@
     along with the caver-js. If not, see <http://www.gnu.org/licenses/>.
 */
 
-const { expect } = require('../extendedChai')
-const AccountForUpdate = require('../../packages/caver-klay/caver-klay-accounts/src/account/accountForUpdate')
-const Account = require('../../packages/caver-account')
+import _ from 'lodash'
+import { expect } from '../extendedChai'
+import AccountForUpdate from '../../packages/caver-klay/caver-klay-accounts/src/account/accountForUpdate'
+import Account from '../../packages/caver-account'
 
-const Keyring = require('../../packages/caver-wallet/src/keyring/keyringFactory')
-const { KEY_ROLE } = require('../../packages/caver-wallet/src/keyring/keyringHelper')
+import Keyring from '../../packages/caver-wallet/src/keyring/keyringFactory'
+import { KEY_ROLE } from '../../packages/caver-wallet/src/keyring/keyringHelper'
 
-const SignatureData = require('../../packages/caver-wallet/src/keyring/signatureData')
+import SignatureData from '../../packages/caver-wallet/src/keyring/signatureData'
 
 const unitMap = {
     peb: '1',
@@ -52,7 +53,7 @@ const generateMultiSigKeyring = (num = 3) => {
     return keyring
 }
 
-const generateRoleBasedKeyring = numArr => {
+const generateRoleBasedKeyring = (numArr: any) => {
     if (numArr === undefined) {
         numArr = Array(KEY_ROLE.roleLast).fill(1)
     }
@@ -135,8 +136,9 @@ const propertiesForUnnecessary = {
     },
 }
 
-const checkSignature = (tx, expected = {}) => {
-    let { expectedSignatures, expectedLength } = expected
+const checkSignature = (tx: { signatures: string | any[], sign?: any; from?: any; }, expected?: { expectedSignatures?: string[][], expectedLength?: number }) => {
+    let expectedSignatures = expected?.expectedSignatures
+    let expectedLength = expected?.expectedLength
 
     if (expectedLength === undefined) {
         if (expectedSignatures !== undefined) {
@@ -159,7 +161,7 @@ const checkSignature = (tx, expected = {}) => {
     }
 }
 
-const checkFeePayerSignature = (tx, expected = {}) => {
+const checkFeePayerSignature = (tx: { feePayerSignatures: string | any[] }, expected: any = {}) => {
     let { expectedFeePayerSignatures, expectedLength } = expected
 
     if (expectedLength === undefined) {
@@ -183,7 +185,7 @@ const checkFeePayerSignature = (tx, expected = {}) => {
     }
 }
 
-const makeAccount = (address, type, options) => {
+const makeAccount = (address: string, type: any, options?: any) => {
     const defaultOption = { threshold: 1, weights: [1, 1, 1] }
     switch (type) {
         case accountKeyTestCases.LEGACY:
@@ -220,7 +222,7 @@ const accountKeyTestCases = {
     ROLEBAED: 4,
 }
 
-module.exports = {
+export default {
     unitMap,
     generateDecoupledKeyring,
     generateMultiSigKeyring,

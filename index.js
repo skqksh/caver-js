@@ -97,14 +97,14 @@ function Caver(provider, net) {
         // This will update the currentProvider for the contract instances
         const _this = this // eslint-disable-line no-shadow
         const setProvider = self.setProvider // eslint-disable-line no-shadow
-        self.setProvider = function() {
+        self.setProvider = function () {
             setProvider.apply(self, arguments)
             core.packageInit(_this, [self])
         }
         this.setKeyrings(self.wallet)
     }
 
-    Contract.setProvider = function() {
+    Contract.setProvider = function () {
         BaseContract.setProvider.apply(this, arguments)
     }
 
